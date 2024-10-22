@@ -119,3 +119,58 @@ void load_courses_from_csv(course_t **list, char *filename)
 
   fclose(file);
 }
+
+/**
+ * show_course_help - display help page for course command
+ */
+void show_course_help(void)
+{
+  printf("\nNAME\n");
+  printf("    course - Manage students' courses interactively\n");
+
+  printf("\nSYNOPSIS\n");
+  printf("    course [COMMAND] [OPTIONS]\n");
+
+  printf("\nDESCRIPTION\n");
+  printf("    This program allows you to manage students' courses. ");
+  printf("You can add, remove, display, list, sort, and search for students' courses. ");
+  printf("The program runs in an infinite loop until 'exit' is entered.\n");
+
+  printf("\nCOMMANDS\n");
+  printf("    course add <roll_number>\n");
+  printf("        Add a new course for a student. You will be prompted for the course name and the score.\n\n");
+
+  printf("    course remove <roll_number> <course_name>\n");
+  printf("        Remove a course for the specified student by roll number and course name.\n\n");
+
+  printf("    course show <roll_number>\n");
+  printf("        Display all the courses and scores for the specified student by roll number.\n\n");
+
+  printf("    course list\n");
+  printf("        List all students with their courses.\n\n");
+
+  printf("    course sort asc|desc\n");
+  printf("        Sort all students and their courses by roll number in ascending or descending order.\n\n");
+
+  printf("    course find <query>\n");
+  printf("        Find a course by its name. The <query> can be any part of the course name.\n\n");
+
+  printf("    course save <filename>\n");
+  printf("        Save list of courses to a text/csv file.\n\n");
+
+  printf("    course load <filename>\n");
+  printf("        Load list of courses from a text/csv file.\n\n");
+
+  printf("    course help\n");
+  printf("        Display this help information for course commands.\n\n");
+
+  printf("\nEXAMPLES\n");
+  printf("    course add 1\n");
+  printf("        Prompts for a course name and score, then adds the course to the student with roll number 1.\n\n");
+
+  printf("    course show 2\n");
+  printf("        Displays all courses and their scores for the student with roll number 2.\n\n");
+
+  printf("    exit\n");
+  printf("        Exits the program.\n");
+}

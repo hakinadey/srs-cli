@@ -63,6 +63,9 @@ typedef struct course_t
 } course_t;
 
 void init_program(void);
+void print_usage(void);
+void show_student_help(void);
+void show_course_help(void);
 
 int add_student(student_t **list, int roll_number, char *first_name, char *last_name);
 void print_students(student_t *list);

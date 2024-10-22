@@ -18,6 +18,9 @@ int main(int argc, char *argv[])
 
   course_t *courses = NULL;
   load_courses_from_csv(&courses, courses_filename);
+
+  save_students_to_csv(students, "students.csv");
+  save_courses_to_csv(courses, "courses.csv");
 }
 
 void init_program(void)
@@ -53,11 +56,28 @@ void init_program(void)
   printf("Please enter your name: ");
   fgets((char *restrict)&name, sizeof(name), stdin);
 
-  printf("Welcome, %s\n", name);
-  printf("Usage: \n\n");
-  printf("add: Add a student\n");
-  printf("show: Display all students' information\n");
-  printf("show <roll_number>: Display a student's information\n");
-  printf("remove <roll_number>: Remove a student\n");
-  printf("save: Save data to file\n\n");
+  printf("\nWelcome, %s\n", name);
+  print_usage();
+}
+
+void print_usage(void)
+{
+  printf("Student Record System (SRS) - Manage student records and their courses interactively\n");
+
+  printf("\nSYNOPSIS\n");
+  printf("    student [COMMAND] [OPTIONS]\n");
+  printf("    course [COMMAND] [OPTIONS]\n");
+
+  printf("\nDESCRIPTION\n");
+  printf("    This program allows you to manage student records and their courses using a shell prompt. ");
+  printf("You can add, remove, display, list, sort, and search for students and courses. ");
+  printf("The program runs in an infinite loop until 'exit' is entered.\n");
+
+  printf("\nCOMMANDS\n");
+  printf("    student help\n");
+  printf("        Displays help page for student commands.\n");
+  printf("    course help\n");
+  printf("        Displays help page for course commands.\n");
+  printf("    exit\n");
+  printf("        Exits the program.\n");
 }

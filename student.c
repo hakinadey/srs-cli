@@ -123,3 +123,63 @@ void load_students_from_csv(student_t **list, char *filename)
 
   fclose(file);
 }
+
+/**
+ * show_student_help - display help page for student command
+ */
+void show_student_help(void)
+{
+  printf("\nNAME\n");
+  printf("    student - Manage students' records interactively\n");
+
+  printf("\nSYNOPSIS\n");
+  printf("    student [COMMAND] [OPTIONS]\n");
+
+  printf("\nDESCRIPTION\n");
+  printf("    This program allows you to manage students' records. ");
+  printf("You can add, remove, display, list, sort, and search for students. ");
+  printf("The program runs in an infinite loop until 'exit' is entered.\n");
+
+  printf("\nCOMMANDS\n");
+
+  printf("    student add\n");
+  printf("        Add a new student. You will be prompted for the student's first name and last name.\n\n");
+
+  printf("    student remove <roll_number>\n");
+  printf("        Remove a student with the specified roll number.\n\n");
+
+  printf("    student show <roll_number>\n");
+  printf("        Display the details of a student with the specified roll number.\n\n");
+
+  printf("    student list\n");
+  printf("        List all students in the system.\n\n");
+
+  printf("    student sort asc|desc\n");
+  printf("        Sort the student list in ascending or descending order by roll number.\n\n");
+
+  printf("    student find <query>\n");
+  printf("        Find a student by their first or last name. The <query> can be any part of the name.\n\n");
+
+  printf("    student save <filename>\n");
+  printf("        Save list of students to a text/csv file.\n\n");
+
+  printf("    student load <filename>\n");
+  printf("        Load list of students from a text/csv file.\n\n");
+
+  printf("    student help\n");
+  printf("        Display this help information for student commands.\n\n");
+
+  printf("    exit\n");
+  printf("        Exit the program.\n");
+
+  printf("\nEXAMPLES\n");
+
+  printf("    student add\n");
+  printf("        Prompts the user for the first and last name and creates a new student record.\n\n");
+
+  printf("    student remove 3\n");
+  printf("        Removes the student with roll number 3.\n\n");
+
+  printf("    student show 5\n");
+  printf("        Displays the student record for roll number 5.\n\n");
+}
