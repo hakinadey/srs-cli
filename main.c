@@ -5,19 +5,19 @@ int ROLL_NUMBER = 1;
 int main(int argc, char *argv[])
 {
   init_program();
-  char *students_file = "students.csv";
-  char *courses_file = "courses.csv";
+  char *students_filename = "students.csv";
+  char *courses_filename = "courses.csv";
 
   if (argc > 1)
-    students_file = argv[1];
+    students_filename = argv[1];
   if (argc > 2)
-    courses_file = argv[2];
+    courses_filename = argv[2];
 
   student_t *students = NULL;
-  load_students_from_csv(&students, students_file);
+  load_students_from_csv(&students, students_filename);
 
   course_t *courses = NULL;
-  load_courses_from_csv(&courses, courses_file);
+  load_courses_from_csv(&courses, courses_filename);
 }
 
 void init_program(void)
