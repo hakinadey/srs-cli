@@ -19,8 +19,33 @@ int main(int argc, char *argv[])
   course_t *courses = NULL;
   load_courses_from_csv(&courses, courses_filename);
 
-  save_students_to_csv(students, "students.csv");
-  save_courses_to_csv(courses, "courses.csv");
+  char input[255];
+  char *command;
+  while (1)
+  {
+
+    printf(">>> ");
+    if (fgets(input, sizeof(input), stdin) == NULL)
+    {
+      perror("Could not read input\n");
+      continue;
+    }
+    input[strcspn(input, "\n")] = 0;
+
+    command = strtok(input, " ");
+    if (command == NULL)
+      continue;
+
+    if (strcmp(command, "exit") == 0)
+      break;
+
+    if (strcmp(command, "student") == 0)
+      printf("executing student commands\n");
+    else if (strcmp(command, "course") == 0)
+      printf("executing course commands\n");
+    else
+      print_usage();
+  }
 }
 
 void init_program(void)
