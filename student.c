@@ -50,6 +50,7 @@ int add_student(student_t **list, int roll_number, char *first_name, char *last_
 /**
  * find_student_by_roll_number - find a single student in the linked list
  * @list: pointer to head of the linked list
+ * @roll_number: roll number to find
  */
 student *find_student_by_roll_number(student_t *list, int roll_number)
 {
@@ -63,6 +64,56 @@ student *find_student_by_roll_number(student_t *list, int roll_number)
   }
 
   return NULL;
+}
+
+/**
+ * find_student_node_by_roll_number - find a single student node in the linked list
+ * @list: pointer to head of the linked list
+ * @roll_number: roll number to find
+ */
+student_t *find_student_node_by_roll_number(student_t *head, int roll_number)
+{
+  student_t *current = head;
+
+  while (current != NULL)
+  {
+    if (current->data->roll_number == roll_number)
+      return current;
+    current = current->next;
+  }
+
+  return NULL;
+}
+
+/**
+ * remove_student_by_roll_number - remove a single student with given roll number in the linked list
+ * @list: double pointer to the head of list
+ * @roll_number: roll number to remove
+ */
+void remove_student_by_roll_number(student_t **list, int roll_number)
+{
+  student_t *node = find_student_node_by_roll_number(*list, roll_number);
+
+  if (node == NULL)
+  {
+    printf("Student with roll number %d does not exist\n", roll_number);
+    return;
+  }
+
+  if (node == *list)
+    *list = node->next;
+
+  if (node->prev != NULL)
+    node->prev->next = node->next;
+
+  if (node->next != NULL)
+    node->next->prev = node->prev;
+
+  free(node->data->first_name);
+  free(node->data->last_name);
+  free(node->data);
+  free(node);
+  printf("Student with roll number %d removed\n", roll_number);
 }
 
 /**

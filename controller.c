@@ -40,7 +40,7 @@ void student_print_all(student_t **list, char *argument)
  */
 void student_print_one(student_t **list, char *argument)
 {
-  int roll_number = atoi(argument);
+  int roll_number = argument == NULL ? 0 : atoi(argument);
   if (!argument || (roll_number == 0 && argument[0] != 0))
   {
     printf("Please provide a valid roll number\n");
@@ -64,4 +64,21 @@ void student_print_one(student_t **list, char *argument)
   printf("\n*************** Academic Details *************\n");
 
   printf("\n**********************************************\n");
+}
+
+/**
+ * student_remove_one - controller to remove one student
+ * @list: pointer to linked list
+ * @arguement: argument passed to controller
+ */
+void student_remove_one(student_t **list, char *argument)
+{
+  int roll_number = argument == NULL ? 0 : atoi(argument);
+  if (!argument || (roll_number == 0 && argument[0] != 0))
+  {
+    printf("Please provide a valid roll number\n");
+    return;
+  }
+
+  remove_student_by_roll_number(list, roll_number);
 }

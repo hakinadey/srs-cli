@@ -76,6 +76,8 @@ void show_course_help(void);
 int add_student(student_t **list, int roll_number, char *first_name, char *last_name);
 int find_highest_roll_number(student_t *list);
 student *find_student_by_roll_number(student_t *list, int roll_number);
+student_t *find_student_node_by_roll_number(student_t *head, int roll_number);
+void remove_student_by_roll_number(student_t **list, int roll_number);
 void print_students(student_t *list, int count);
 void save_students_to_csv(student_t *list, char *filename);
 void load_students_from_csv(student_t **list, char *filename);
@@ -88,5 +90,6 @@ void load_courses_from_csv(course_t **list, char *filename);
 void student_add(student_t **list, char *argument);
 void student_print_all(student_t **list, char *argument);
 void student_print_one(student_t **list, char *argument);
+void student_remove_one(student_t **list, char *argument);
 
 #endif /* _SRS_H_ */
