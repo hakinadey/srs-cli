@@ -106,20 +106,37 @@ void student_sort(student_t **list, char *argument)
   if (strcmp(direction, "asc") == 0)
   {
     sort_students_by_name(*list);
-    *list = find_head(*list);
-    print_students(*list, 0);
   }
   else if (strcmp(direction, "desc") == 0)
   {
     sort_students_by_name(*list);
-    *list = find_head(*list);
     reverse_students_list(list);
-    *list = find_head(*list);
-    print_students(*list, 0);
   }
   else
   {
     printf("Sort direction can only be 'asc' or 'desc'\n");
     return;
   }
+}
+
+/**
+ * student_save - save list of students to file
+ * @list: pointer to linked list
+ * @argument: argument passed to controller
+ */
+void student_save(student_t **list, char *argument)
+{
+  char *filename = argument == NULL ? "students.csv" : argument;
+  save_students_to_csv(*list, filename);
+}
+
+/**
+ * student_load - load list of students from file
+ * @list: pointer to linked list
+ * @argument: argument passed to controller
+ */
+void student_load(student_t **list, char *argument)
+{
+  char *filename = argument == NULL ? "students.csv" : argument;
+  load_students_from_csv(list, filename);
 }

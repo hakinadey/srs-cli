@@ -6,13 +6,13 @@
  * @first_name: first name of student
  * @last_name: last name of student
  */
-int add_student(student_t **list, int roll_number, char *first_name, char *last_name)
+void add_student(student_t **list, int roll_number, char *first_name, char *last_name)
 {
   student *new_student = (student *)malloc(sizeof(student));
   if (!new_student)
   {
     printf("Could not allocate enough memory for new student\n");
-    return EXIT_FAILURE;
+    return;
   }
 
   int default_roll_number = find_highest_roll_number(*list) + 1;
@@ -27,10 +27,12 @@ int add_student(student_t **list, int roll_number, char *first_name, char *last_
     free(new_student->last_name);
     free(new_student);
     printf("Could not allocate enough memory for new student\n");
-    return EXIT_FAILURE;
+    return;
   }
 
   new_node->data = new_student;
+  new_node->prev = NULL;
+  new_node->next = NULL;
 
   if (*list == NULL)
     *list = new_node;
@@ -44,7 +46,6 @@ int add_student(student_t **list, int roll_number, char *first_name, char *last_
   }
   if (!roll_number)
     printf("Student added: (%d). %s %s\n", new_student->roll_number, first_name, last_name);
-  return EXIT_SUCCESS;
 }
 
 /**
@@ -261,6 +262,7 @@ void load_students_from_csv(student_t **list, char *filename)
   char line[256];
   fgets(line, sizeof(line), file);
 
+  empty_students_list(list);
   while (fgets(line, sizeof(line), file))
   {
     line[strcspn(line, "\n")] = 0;
@@ -271,7 +273,7 @@ void load_students_from_csv(student_t **list, char *filename)
 
     if (sscanf(line, "%d,%49[^,],%49[^,]", &roll_number, first_name, last_name) != 3)
     {
-      fprintf(stderr, "Could not parse line: %s\n", line);
+      printf("Could not parse line: %s\n", line);
       return;
     }
 
@@ -409,18 +411,26 @@ void swap_students(student *first_student, student *second_student)
 }
 
 /**
- * find_student_head - find the head of the students linked list
- * @list: pointer to any node
+ * empty_students_list - empty the students linked list
+ * @list: double pointer to linked list
  */
-student_t *find_head(student_t *node)
+void empty_students_list(student_t **list)
 {
-  student_t *current = node;
+  student_t *current = *list;
+  student_t *next = NULL;
 
-  if (current == NULL)
-    return NULL;
+  while (current != NULL)
+  {
+    next = current->next;
 
-  while (current->prev != NULL)
-    current = current->prev;
+    free(current->data->first_name);
+    free(current->data->last_name);
+    free(current->data);
 
-  return current;
+    free(current);
+
+    current = next;
+  }
+
+  *list = NULL;
 }

@@ -74,7 +74,7 @@ void print_usage(void);
 void show_student_help(void);
 void show_course_help(void);
 
-int add_student(student_t **list, int roll_number, char *first_name, char *last_name);
+void add_student(student_t **list, int roll_number, char *first_name, char *last_name);
 int find_highest_roll_number(student_t *list);
 student *find_student_by_roll_number(student_t *list, int roll_number);
 student_t *find_student_node_by_roll_number(student_t *head, int roll_number);
@@ -87,7 +87,7 @@ void save_students_to_csv(student_t *list, char *filename);
 void load_students_from_csv(student_t **list, char *filename);
 char *strcasestr(const char *haystack, const char *needle);
 void swap_students(student *first_student, student *second_student);
-student_t *find_head(student_t *node);
+void empty_students_list(student_t **list);
 
 int add_course(course_t **list, int roll_number, char *course_name, int score, int silent);
 void print_courses(course_t *list);
@@ -100,5 +100,7 @@ void student_print_one(student_t **list, char *argument);
 void student_remove_one(student_t **list, char *argument);
 void student_find(student_t **list, char *argument);
 void student_sort(student_t **list, char *argument);
+void student_save(student_t **list, char *argument);
+void student_load(student_t **list, char *argument);
 
 #endif /* _SRS_H_ */
