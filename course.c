@@ -147,13 +147,7 @@ void show_course_help(void)
   printf("        Display all the courses and scores for the specified student by roll number.\n\n");
 
   printf("    course list\n");
-  printf("        List all students with their courses.\n\n");
-
-  printf("    course sort asc|desc\n");
-  printf("        Sort all students and their courses by roll number in ascending or descending order.\n\n");
-
-  printf("    course find <query>\n");
-  printf("        Find a course by its name. The <query> can be any part of the course name.\n\n");
+  printf("        List all courses.\n\n");
 
   printf("    course save <filename>\n");
   printf("        Save list of courses to a text/csv file.\n\n");

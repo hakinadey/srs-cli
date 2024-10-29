@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -g
-SRCS = main.c student.c course.c
+SRCS = main.c student.c course.c controller.c
 TARGET = srs
 
 $(TARGET): $(SRCS)

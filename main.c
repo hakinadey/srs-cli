@@ -1,7 +1,5 @@
 #include "srs.h"
 
-int ROLL_NUMBER = 1;
-
 int main(int argc, char *argv[])
 {
   init_program();
@@ -23,7 +21,6 @@ int main(int argc, char *argv[])
   char *command;
   while (1)
   {
-
     printf(">>> ");
     if (fgets(input, sizeof(input), stdin) == NULL)
     {
@@ -40,9 +37,36 @@ int main(int argc, char *argv[])
       break;
 
     if (strcmp(command, "student") == 0)
-      printf("executing student commands\n");
+    {
+      char *subcommand = strtok(NULL, " ");
+      char *argument = strtok(NULL, " ");
+      controller_t controllers[] = {
+          {"add", student_add},
+          {"list", student_print_all},
+          {"show", student_print_one},
+          {NULL, NULL},
+      };
+
+      int i = 0;
+      while (controllers[i].command)
+      {
+        if (strcmp(subcommand, controllers[i].command) == 0)
+        {
+          controllers[i].function(&students, argument);
+          break;
+        }
+        i++;
+      }
+      if (!controllers[i].command)
+        show_student_help();
+    }
     else if (strcmp(command, "course") == 0)
-      printf("executing course commands\n");
+    {
+      char *subcommand = strtok(NULL, " ");
+      char *argument = strtok(NULL, " ");
+      printf("your subcommand is %s\n", subcommand);
+      printf("your argument is %s\n", argument);
+    }
     else
       print_usage();
   }

@@ -24,17 +24,12 @@ typedef struct
  * @next: pointer to next student
  * @prev: pointer to next student
  */
-typedef struct student_t
+typedef struct student_s
 {
   student *data;
-  struct student_t *next;
-  struct student_t *prev;
+  struct student_s *next;
+  struct student_s *prev;
 } student_t;
-
-/**
- * auto-incrementing roll number (ID) for students
- */
-extern int ROLL_NUMBER;
 
 /**
  * course - course data type
@@ -62,13 +57,26 @@ typedef struct course_t
   struct course_t *prev;
 } course_t;
 
+/**
+ * controller_t - map command to controller function
+ * @command: command entered
+ * @function: controller function to execute
+ */
+typedef struct
+{
+  char *command;
+  void (*function)(student_t **list, char *argument);
+} controller_t;
+
 void init_program(void);
 void print_usage(void);
 void show_student_help(void);
 void show_course_help(void);
 
 int add_student(student_t **list, int roll_number, char *first_name, char *last_name);
-void print_students(student_t *list);
+int find_highest_roll_number(student_t *list);
+student *find_student_by_roll_number(student_t *list, int roll_number);
+void print_students(student_t *list, int count);
 void save_students_to_csv(student_t *list, char *filename);
 void load_students_from_csv(student_t **list, char *filename);
 
@@ -76,5 +84,9 @@ int add_course(course_t **list, int roll_number, char *course_name, int score, i
 void print_courses(course_t *list);
 void save_courses_to_csv(course_t *list, char *filename);
 void load_courses_from_csv(course_t **list, char *filename);
+
+void student_add(student_t **list, char *argument);
+void student_print_all(student_t **list, char *argument);
+void student_print_one(student_t **list, char *argument);
 
 #endif /* _SRS_H_ */

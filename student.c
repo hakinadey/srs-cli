@@ -15,10 +15,8 @@ int add_student(student_t **list, int roll_number, char *first_name, char *last_
     return EXIT_FAILURE;
   }
 
-  if (roll_number)
-    ROLL_NUMBER = roll_number + 1;
-
-  new_student->roll_number = roll_number ? roll_number : ROLL_NUMBER++;
+  int default_roll_number = find_highest_roll_number(*list) + 1;
+  new_student->roll_number = roll_number ? roll_number : default_roll_number;
   new_student->first_name = strdup(first_name);
   new_student->last_name = strdup(last_name);
 
@@ -50,11 +48,31 @@ int add_student(student_t **list, int roll_number, char *first_name, char *last_
 }
 
 /**
+ * find_student_by_roll_number - find a single student in the linked list
+ * @list: pointer to head of the linked list
+ */
+student *find_student_by_roll_number(student_t *list, int roll_number)
+{
+  student_t *current = list;
+
+  while (current != NULL)
+  {
+    if (current->data->roll_number == roll_number)
+      return current->data;
+    current = current->next;
+  }
+
+  return NULL;
+}
+
+/**
  * print_students - print students in students linked list
  * @list: point to the head of the linked list
+ * @count: number of students to print
  */
-void print_students(student_t *list)
+void print_students(student_t *list, int count)
 {
+  int printed = 0;
   student_t *current = list;
 
   printf("%-15s %-25s %-25s\n", "Roll Number", "First Name", "Last Name");
@@ -62,8 +80,11 @@ void print_students(student_t *list)
 
   while (current)
   {
+    if (count != 0 && printed >= count)
+      break;
     printf("%-15d %-25s %-25s\n", current->data->roll_number, current->data->first_name, current->data->last_name);
     current = current->next;
+    printed++;
   }
 }
 
@@ -151,8 +172,8 @@ void show_student_help(void)
   printf("    student show <roll_number>\n");
   printf("        Display the details of a student with the specified roll number.\n\n");
 
-  printf("    student list\n");
-  printf("        List all students in the system.\n\n");
+  printf("    student list [n]\n");
+  printf("        List all or first n students in the system.\n\n");
 
   printf("    student sort asc|desc\n");
   printf("        Sort the student list in ascending or descending order by roll number.\n\n");
@@ -182,4 +203,26 @@ void show_student_help(void)
 
   printf("    student show 5\n");
   printf("        Displays the student record for roll number 5.\n\n");
+}
+
+/**
+ * find_highest_roll_number - find the highest roll number
+ * @list: pointer to head of the linked list
+ */
+int find_highest_roll_number(student_t *list)
+{
+  if (list == NULL)
+    return 0;
+
+  int highest_roll_number = list->data->roll_number;
+
+  student_t *current = list->next;
+  while (current != NULL)
+  {
+    if (current->data->roll_number > highest_roll_number)
+      highest_roll_number = current->data->roll_number;
+    current = current->next;
+  }
+
+  return highest_roll_number;
 }
