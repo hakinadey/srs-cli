@@ -29,6 +29,8 @@ int add_course(course_t **list, int roll_number, char *course_name, int score, i
   }
 
   new_node->data = new_course;
+  new_node->prev = NULL;
+  new_node->next = NULL;
 
   if (*list == NULL)
     *list = new_node;
@@ -60,6 +62,45 @@ void print_courses(course_t *list)
   {
     printf("%-15d %-25s %-25d\n", current->data->roll_number, current->data->course_name, current->data->score);
     current = current->next;
+  }
+}
+
+/**
+ * find_courses_by_roll_number - find all courses with given roll number
+ * @list: pointer to courses linked list
+ * @roll_number: roll number to find
+ */
+void print_courses_by_roll_number(course_t *head, int roll_number)
+{
+  int found = 0;
+  course_t *current = head;
+
+  printf("%-15s %-10s %-10s\n", "Course Name", "Score", "Grade");
+  printf("%-15s %-10s %-10s\n", "----------", "---------", "---------");
+
+  int total_score = 0;
+  int scores_count = 0;
+  while (current != NULL)
+  {
+    if (current->data->roll_number == roll_number)
+    {
+      printf("%-15s %-10d %-10s\n", current->data->course_name, current->data->score, get_score_grade(current->data->score));
+      total_score += current->data->score;
+      scores_count++;
+      found = 1;
+    }
+    current = current->next;
+  }
+
+  if (found)
+  {
+    printf("%-15s %-10s %-10s\n", "----------", "---------", "---------");
+    printf("%-15s %-10d %-10s\n", "Average", total_score / scores_count, get_score_grade(total_score / scores_count));
+    found = 1;
+  }
+  else
+  {
+    printf("No courses enrolled.\n");
   }
 }
 
@@ -167,4 +208,22 @@ void show_course_help(void)
 
   printf("    exit\n");
   printf("        Exits the program.\n");
+}
+
+/**
+ * get_score_grade - compute grade associated with score
+ * @score: score value
+ */
+const char *get_score_grade(int score)
+{
+
+  if (score >= 70)
+    return "A";
+  if (score >= 60)
+    return "B";
+  if (score >= 50)
+    return "C";
+  if (score >= 40)
+    return "D";
+  return "F";
 }

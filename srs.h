@@ -66,7 +66,7 @@ typedef struct course_t
 typedef struct
 {
   char *command;
-  void (*function)(student_t **list, char *argument);
+  void (*function)(student_t **students, course_t **courses, char *argument);
 } controller_t;
 
 void init_program(void);
@@ -91,16 +91,21 @@ void empty_students_list(student_t **list);
 
 int add_course(course_t **list, int roll_number, char *course_name, int score, int silent);
 void print_courses(course_t *list);
+void print_courses_by_roll_number(course_t *head, int roll_number);
 void save_courses_to_csv(course_t *list, char *filename);
 void load_courses_from_csv(course_t **list, char *filename);
+const char *get_score_grade(int score);
 
-void student_add(student_t **list, char *argument);
-void student_print_all(student_t **list, char *argument);
-void student_print_one(student_t **list, char *argument);
-void student_remove_one(student_t **list, char *argument);
-void student_find(student_t **list, char *argument);
-void student_sort(student_t **list, char *argument);
-void student_save(student_t **list, char *argument);
-void student_load(student_t **list, char *argument);
+void student_add(student_t **students, course_t **courses, char *argument);
+void student_print_all(student_t **students, course_t **courses, char *argument);
+void student_print_one(student_t **students, course_t **courses, char *argument);
+void student_remove_one(student_t **students, course_t **courses, char *argument);
+void student_find(student_t **students, course_t **courses, char *argument);
+void student_sort(student_t **students, course_t **courses, char *argument);
+void student_save(student_t **students, course_t **courses, char *argument);
+void student_load(student_t **students, course_t **courses, char *argument);
+
+void course_add(student_t **students, course_t **courses, char *argument);
+void course_remove(student_t **students, course_t **courses, char *argument);
 
 #endif /* _SRS_H_ */
