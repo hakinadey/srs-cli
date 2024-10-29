@@ -117,6 +117,34 @@ void remove_student_by_roll_number(student_t **list, int roll_number)
 }
 
 /**
+ * find_students_by_query - search list for student whose names match query
+ * @list: pointer to head of list
+ * @query: query string
+ */
+void find_students_by_query(student_t *list, const char *query)
+{
+  student_t *current = list;
+  int found = 0;
+
+  printf("%-15s %-25s %-25s\n", "Roll Number", "First Name", "Last Name");
+  printf("%-15s %-25s %-25s\n", "------------", "----------", "---------");
+
+  while (current != NULL)
+  {
+    if ((strcasestr(current->data->first_name, query) != NULL) ||
+        (strcasestr(current->data->last_name, query) != NULL))
+    {
+      printf("%-15d %-25s %-25s\n", current->data->roll_number, current->data->first_name, current->data->last_name);
+      found = 1;
+    }
+    current = current->next;
+  }
+
+  if (!found)
+    printf("No students found matching the query '%s'.\n", query);
+}
+
+/**
  * print_students - print students in students linked list
  * @list: point to the head of the linked list
  * @count: number of students to print
@@ -276,4 +304,37 @@ int find_highest_roll_number(student_t *list)
   }
 
   return highest_roll_number;
+}
+
+/**
+ * strcasestr - search string case-insensitive
+ * @haystack: string to search
+ * @needle: substring to find
+ */
+char *strcasestr(const char *haystack, const char *needle)
+{
+  if (!*needle)
+  {
+    return (char *)haystack;
+  }
+
+  for (; *haystack; ++haystack)
+  {
+    if (tolower((unsigned char)*haystack) == tolower((unsigned char)*needle))
+    {
+      const char *h, *n;
+      for (h = haystack, n = needle; *h && *n; ++h, ++n)
+      {
+        if (tolower((unsigned char)*h) != tolower((unsigned char)*n))
+        {
+          break;
+        }
+      }
+      if (!*n)
+      {
+        return (char *)haystack;
+      }
+    }
+  }
+  return NULL;
 }

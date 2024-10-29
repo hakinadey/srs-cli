@@ -69,7 +69,7 @@ void student_print_one(student_t **list, char *argument)
 /**
  * student_remove_one - controller to remove one student
  * @list: pointer to linked list
- * @arguement: argument passed to controller
+ * @argument: argument passed to controller
  */
 void student_remove_one(student_t **list, char *argument)
 {
@@ -81,4 +81,15 @@ void student_remove_one(student_t **list, char *argument)
   }
 
   remove_student_by_roll_number(list, roll_number);
+}
+
+/**
+ * student_find - controller to find students given a search query
+ * @list: pointer to linked list
+ * @argument: argument passed to controller
+ */
+void student_find(student_t **list, char *argument)
+{
+  const char *query = argument == NULL ? "" : argument;
+  find_students_by_query(*list, query);
 }
