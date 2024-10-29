@@ -145,6 +145,63 @@ void find_students_by_query(student_t *list, const char *query)
 }
 
 /**
+ * sort_students_asc - sort students list on ascending order
+ * @list: pointer to students list
+ */
+void sort_students_by_name(student_t *list)
+{
+  if (list == NULL)
+    return;
+
+  int swapped;
+  student_t *current;
+  student_t *last = NULL;
+
+  do
+  {
+    swapped = 0;
+    current = list;
+
+    while (current->next != last)
+    {
+      int cmp_first = strcmp(current->data->first_name, current->next->data->first_name);
+      int cmp_last = strcmp(current->data->last_name, current->next->data->last_name);
+
+      if (cmp_first > 0 || (cmp_first == 0 && cmp_last > 0))
+      {
+        swap_students(current->data, current->next->data);
+        swapped = 1;
+      }
+      current = current->next;
+    }
+    last = current;
+
+  } while (swapped);
+}
+
+/**
+ * reverse_students_list - reverse the students linked list
+ * @list: double pointer to linked list
+ */
+void reverse_students_list(student_t **list)
+{
+  student_t *current = *list;
+  student_t *temp = NULL;
+
+  while (current != NULL)
+  {
+    temp = current->prev;
+    current->prev = current->next;
+    current->next = temp;
+
+    current = current->prev;
+  }
+
+  if (temp != NULL)
+    *list = temp->prev;
+}
+
+/**
  * print_students - print students in students linked list
  * @list: point to the head of the linked list
  * @count: number of students to print
@@ -337,4 +394,33 @@ char *strcasestr(const char *haystack, const char *needle)
     }
   }
   return NULL;
+}
+
+/**
+ * swap_students - swap two students
+ * @first_student: pointer to first student
+ * @second_student: pointer to second student
+ */
+void swap_students(student *first_student, student *second_student)
+{
+  student temp = *first_student;
+  *first_student = *second_student;
+  *second_student = temp;
+}
+
+/**
+ * find_student_head - find the head of the students linked list
+ * @list: pointer to any node
+ */
+student_t *find_head(student_t *node)
+{
+  student_t *current = node;
+
+  if (current == NULL)
+    return NULL;
+
+  while (current->prev != NULL)
+    current = current->prev;
+
+  return current;
 }

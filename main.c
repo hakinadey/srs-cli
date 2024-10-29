@@ -46,6 +46,7 @@ int main(int argc, char *argv[])
           {"show", student_print_one},
           {"remove", student_remove_one},
           {"find", student_find},
+          {"sort", student_sort},
           {NULL, NULL},
       };
 

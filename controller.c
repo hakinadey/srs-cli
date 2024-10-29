@@ -93,3 +93,33 @@ void student_find(student_t **list, char *argument)
   const char *query = argument == NULL ? "" : argument;
   find_students_by_query(*list, query);
 }
+
+/**
+ * student_sort - sort the list of students
+ * @list: pointer to linked list
+ * @argument: argument passed to controller
+ */
+void student_sort(student_t **list, char *argument)
+{
+  char *direction = argument == NULL ? "asc" : argument;
+
+  if (strcmp(direction, "asc") == 0)
+  {
+    sort_students_by_name(*list);
+    *list = find_head(*list);
+    print_students(*list, 0);
+  }
+  else if (strcmp(direction, "desc") == 0)
+  {
+    sort_students_by_name(*list);
+    *list = find_head(*list);
+    reverse_students_list(list);
+    *list = find_head(*list);
+    print_students(*list, 0);
+  }
+  else
+  {
+    printf("Sort direction can only be 'asc' or 'desc'\n");
+    return;
+  }
+}
