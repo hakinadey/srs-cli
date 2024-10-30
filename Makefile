@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -g
-SRCS = src/main.c src/student.c src/course.c src/controller.c
+SRCS = src/*.c
 TARGET = bin/srs
 
 $(TARGET): $(SRCS)

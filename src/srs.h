@@ -95,6 +95,7 @@ void print_courses_by_roll_number(course_t *head, int roll_number);
 void save_courses_to_csv(course_t *list, char *filename);
 void load_courses_from_csv(course_t **list, char *filename);
 const char *get_score_grade(int score);
+void empty_courses_list(course_t **list);
 
 void student_add(student_t **students, course_t **courses, char *argument);
 void student_print_all(student_t **students, course_t **courses, char *argument);

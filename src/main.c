@@ -34,7 +34,11 @@ int main(int argc, char *argv[])
       continue;
 
     if (strcmp(command, "exit") == 0)
+    {
+      empty_students_list(&students);
+      empty_courses_list(&courses);
       break;
+    }
 
     if (strcmp(command, "save") == 0)
     {

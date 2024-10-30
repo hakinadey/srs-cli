@@ -227,3 +227,27 @@ const char *get_score_grade(int score)
     return "D";
   return "F";
 }
+
+/**
+ * empty_courses_list - empty the courses linked list
+ * @list: double pointer to linked list
+ */
+void empty_courses_list(course_t **list)
+{
+  course_t *current = *list;
+  course_t *next = NULL;
+
+  while (current != NULL)
+  {
+    next = current->next;
+
+    free(current->data->course_name);
+    free(current->data);
+
+    free(current);
+
+    current = next;
+  }
+
+  *list = NULL;
+}
