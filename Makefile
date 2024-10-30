@@ -1,10 +1,16 @@
 CC = gcc
 CFLAGS = -Wall -g
-SRCS = main.c student.c course.c controller.c
-TARGET = srs
+SRCS = src/main.c src/student.c src/course.c src/controller.c
+TARGET = bin/srs
 
 $(TARGET): $(SRCS)
 	$(CC) $(CFLAGS) -o $(TARGET) $(SRCS)
 
 clean:
 	rm -f $(TARGET)
+
+run:
+	bin/srs
+
+purge:
+	rm -f bin/srs data/*.csv
