@@ -19,7 +19,7 @@ void student_add(student_t **students, course_t **courses, char *argument)
   first_name[strcspn(first_name, "\n")] = 0;
   last_name[strcspn(last_name, "\n")] = 0;
 
-  add_student(students, 0, first_name, last_name);
+  add_student(students, *courses, 0, first_name, last_name);
 }
 
 /**
@@ -138,8 +138,8 @@ void student_save(student_t **students, course_t **courses, char *argument)
  */
 void student_load(student_t **students, course_t **courses, char *argument)
 {
-  char *filename = argument == NULL ? "students.csv" : argument;
-  load_students_from_csv(students, filename);
+  char *filename = argument == NULL ? "data/students.csv" : argument;
+  load_students_from_csv(students, *courses, filename);
 }
 
 /**

@@ -11,11 +11,11 @@ int main(int argc, char *argv[])
   if (argc > 2)
     courses_filename = argv[2];
 
-  student_t *students = NULL;
-  load_students_from_csv(&students, students_filename);
-
   course_t *courses = NULL;
   load_courses_from_csv(&courses, courses_filename);
+
+  student_t *students = NULL;
+  load_students_from_csv(&students, courses, students_filename);
 
   char input[255];
   char *command;
@@ -59,8 +59,8 @@ int main(int argc, char *argv[])
       char *students_filename = first_argument == NULL ? "data/students.csv" : first_argument;
       char *courses_filename = second_argument == NULL ? "data/courses.csv" : second_argument;
 
-      load_students_from_csv(&students, students_filename);
       load_courses_from_csv(&courses, courses_filename);
+      load_students_from_csv(&students, courses, students_filename);
       continue;
     }
 

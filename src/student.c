@@ -2,11 +2,12 @@
 
 /**
  * add_student - add a new student to the students linked list
- * @list: pointer to head of students linked list
+ * @students: double pointer to head of students linked list
+ * @courses: pointer to head of courses linked list
  * @first_name: first name of student
  * @last_name: last name of student
  */
-void add_student(student_t **list, int roll_number, char *first_name, char *last_name)
+void add_student(student_t **students, course_t *courses, int roll_number, char *first_name, char *last_name)
 {
   student *new_student = (student *)malloc(sizeof(student));
   if (!new_student)
@@ -15,10 +16,11 @@ void add_student(student_t **list, int roll_number, char *first_name, char *last
     return;
   }
 
-  int default_roll_number = find_highest_roll_number(*list) + 1;
+  int default_roll_number = find_highest_roll_number(*students) + 1;
   new_student->roll_number = roll_number ? roll_number : default_roll_number;
   new_student->first_name = strdup(first_name);
   new_student->last_name = strdup(last_name);
+  new_student->average_score = get_average_score(courses, roll_number);
 
   student_t *new_node = (student_t *)malloc(sizeof(student_t));
   if (!new_node)
@@ -34,11 +36,11 @@ void add_student(student_t **list, int roll_number, char *first_name, char *last
   new_node->prev = NULL;
   new_node->next = NULL;
 
-  if (*list == NULL)
-    *list = new_node;
+  if (*students == NULL)
+    *students = new_node;
   else
   {
-    student_t *current = *list;
+    student_t *current = *students;
     while (current->next)
       current = current->next;
     current->next = new_node;
@@ -127,15 +129,15 @@ void find_students_by_query(student_t *list, const char *query)
   student_t *current = list;
   int found = 0;
 
-  printf("%-15s %-25s %-25s\n", "Roll Number", "First Name", "Last Name");
-  printf("%-15s %-25s %-25s\n", "------------", "----------", "---------");
+  printf("%-15s %-25s %-25s %-10s\n", "Roll Number", "First Name", "Last Name", "Avg. Score");
+  printf("%-15s %-25s %-25s %-10s\n", "------------", "----------", "---------", "---------");
 
   while (current != NULL)
   {
     if ((strcasestr(current->data->first_name, query) != NULL) ||
         (strcasestr(current->data->last_name, query) != NULL))
     {
-      printf("%-15d %-25s %-25s\n", current->data->roll_number, current->data->first_name, current->data->last_name);
+      printf("%-15d %-25s %-25s %-10d\n", current->data->roll_number, current->data->first_name, current->data->last_name, current->data->average_score);
       found = 1;
     }
     current = current->next;
@@ -146,7 +148,7 @@ void find_students_by_query(student_t *list, const char *query)
 }
 
 /**
- * sort_students_asc - sort students list on ascending order
+ * sort_students_by_name - sort students list by name on ascending order
  * @list: pointer to students list
  */
 void sort_students_by_name(student_t *list)
@@ -169,6 +171,38 @@ void sort_students_by_name(student_t *list)
       int cmp_last = strcmp(current->data->last_name, current->next->data->last_name);
 
       if (cmp_first > 0 || (cmp_first == 0 && cmp_last > 0))
+      {
+        swap_students(current->data, current->next->data);
+        swapped = 1;
+      }
+      current = current->next;
+    }
+    last = current;
+
+  } while (swapped);
+}
+
+/**
+ * sort_students_by_avg_score - sort students list by score on ascending order
+ * @list: pointer to students list
+ */
+void sort_students_by_avg_score(student_t *list)
+{
+  if (list == NULL)
+    return;
+
+  int swapped;
+  student_t *current;
+  student_t *last = NULL;
+
+  do
+  {
+    swapped = 0;
+    current = list;
+
+    while (current->next != last)
+    {
+      if (current->data->average_score > current->next->data->average_score)
       {
         swap_students(current->data, current->next->data);
         swapped = 1;
@@ -212,14 +246,14 @@ void print_students(student_t *list, int count)
   int printed = 0;
   student_t *current = list;
 
-  printf("%-15s %-25s %-25s\n", "Roll Number", "First Name", "Last Name");
-  printf("%-15s %-25s %-25s\n", "------------", "----------", "---------");
+  printf("%-15s %-25s %-25s %-25s\n", "Roll Number", "First Name", "Last Name", "Avg. Score");
+  printf("%-15s %-25s %-25s %-25s\n", "------------", "----------", "---------", "---------");
 
   while (current)
   {
     if (count != 0 && printed >= count)
       break;
-    printf("%-15d %-25s %-25s\n", current->data->roll_number, current->data->first_name, current->data->last_name);
+    printf("%-15d %-25s %-25s %-10d\n", current->data->roll_number, current->data->first_name, current->data->last_name, current->data->average_score);
     current = current->next;
     printed++;
   }
@@ -250,10 +284,11 @@ void save_students_to_csv(student_t *list, char *filename)
 
 /**
  * load_from_csv - load list of students from CSV file
- * @list: pointer to linked list head
+ * @students: double pointer to students linked list head
+ * @courses: pointer to courses linked list head
  * @filename: name of csv file
  */
-void load_students_from_csv(student_t **list, char *filename)
+void load_students_from_csv(student_t **students, course_t *courses, char *filename)
 {
   FILE *file = fopen(filename, "r");
   if (!file)
@@ -262,7 +297,7 @@ void load_students_from_csv(student_t **list, char *filename)
   char line[256];
   fgets(line, sizeof(line), file);
 
-  empty_students_list(list);
+  empty_students_list(students);
   while (fgets(line, sizeof(line), file))
   {
     line[strcspn(line, "\n")] = 0;
@@ -277,7 +312,7 @@ void load_students_from_csv(student_t **list, char *filename)
       return;
     }
 
-    add_student(list, roll_number, first_name, last_name);
+    add_student(students, courses, roll_number, first_name, last_name);
   }
 
   fclose(file);

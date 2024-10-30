@@ -301,6 +301,33 @@ const char *get_score_grade(int score)
 }
 
 /**
+ * get_average_score - get the average_score of a student
+ * @roll_number: roll number of student
+ * @courses: pointer to courses linked list
+ */
+int get_average_score(course_t *list, int roll_number)
+{
+  int total_score = 0;
+  int courses_count = 0;
+  course_t *current = list;
+
+  while (current != NULL)
+  {
+    if (current->data->roll_number == roll_number)
+    {
+      total_score += current->data->score;
+      courses_count++;
+    }
+    current = current->next;
+  }
+
+  if (courses_count == 0)
+    return 0;
+
+  return total_score / courses_count;
+}
+
+/**
  * empty_courses_list - empty the courses linked list
  * @list: double pointer to linked list
  */
