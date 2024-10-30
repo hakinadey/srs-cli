@@ -75,8 +75,6 @@ int main(int argc, char *argv[])
           {"remove", student_remove_one},
           {"find", student_find},
           {"sort", student_sort},
-          {"save", student_save},
-          {"load", student_load},
           {NULL, NULL},
       };
 
@@ -161,12 +159,6 @@ void init_program(void)
 void print_usage(void)
 {
   printf("Student Record System (SRS) - Manage student records and their courses interactively\n");
-
-  printf("\nSYNOPSIS\n");
-  printf("    save [students_filename] [courses_filename]\n");
-  printf("    load [students_filename] [courses_filename]\n");
-  printf("    student [COMMAND] [OPTIONS]\n");
-  printf("    course [COMMAND] [OPTIONS]\n");
 
   printf("\nDESCRIPTION\n");
   printf("    This program allows you to manage student records and their courses using a shell prompt. ");

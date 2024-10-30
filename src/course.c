@@ -256,30 +256,8 @@ void show_course_help(void)
   printf("    course remove <roll_number> <course_name>\n");
   printf("        Remove a course for the specified student by roll number and course name.\n\n");
 
-  printf("    course show <roll_number>\n");
-  printf("        Display all the courses and scores for the specified student by roll number.\n\n");
-
-  printf("    course list\n");
-  printf("        List all courses.\n\n");
-
-  printf("    course save <filename>\n");
-  printf("        Save list of courses to a text/csv file.\n\n");
-
-  printf("    course load <filename>\n");
-  printf("        Load list of courses from a text/csv file.\n\n");
-
   printf("    course help\n");
   printf("        Display this help information for course commands.\n\n");
-
-  printf("\nEXAMPLES\n");
-  printf("    course add 1\n");
-  printf("        Prompts for a course name and score, then adds the course to the student with roll number 1.\n\n");
-
-  printf("    course show 2\n");
-  printf("        Displays all courses and their scores for the student with roll number 2.\n\n");
-
-  printf("    exit\n");
-  printf("        Exits the program.\n");
 }
 
 /**

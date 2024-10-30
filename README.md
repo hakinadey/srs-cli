@@ -1,41 +1,121 @@
-# Student Record System
+# Student Record System (SRS)
 
-A simple Student Record System in C that allows users to manage student information
+Manage student records and their courses interactively
 
-## Introduction
+## Description
 
-- Program displays a welcome message and prompts the user to enter their name. The program greets the user by their name.
+This program allows you to manage student records and their courses using a shell prompt.
+You can add, remove, display, list, sort, and search for students and courses.
+The program runs in an infinite loop until 'exit' is entered.
 
-## Data Storage
+## Commands
 
-- Program implements storage for student information, including name, roll number, and marks, using appropriate data types.
+### General commands
 
-## Input and Output
+#### Save data to files.
 
-- Program accepts student's marks and displays whether the student has passed or failed based on a passing threshold (e.g., marks above 40 are considered passing).
+```bash
+save [students_filename] [courses_filename]
+```
 
-## Student Records Management
+#### Load data from files.
 
-- Program loops and allows the user to input information for multiple students until the user decides to exit.
+```bash
+load [students_filename] [courses_filename]
+```
 
-- Program stores information for multiple students, with the ability to add, remove, and modify student records.
+#### Displays help page for student commands.
 
-- Program implements functions for adding, modifying, and displaying student records. Ensure these functions take appropriate arguments and return relevant information.
+```bash
+student help
+```
 
-## Memory Management
+#### Display help page for course commands.
 
-- Program uses dynamic memory allocation for student records and ensure memory is freed when no longer needed.
+```bash
+course help
+```
 
-## File Operations
+#### Exit the program.
 
-- Program implements the ability to save student records to a text file and load student records from a text file, storing information such as name, roll number, and marks.
+```bash
+exit
+```
 
-## Search Functionality
+### `student` commands
 
-- Program allows users to search for a student by their roll number and display the relevant information.
+Allows you to manage students' records.
+You can add, remove, display, list, sort, and search for students.
+The program runs in an infinite loop until `exit` is entered.
 
-## Calculations and Sorting
+#### Synopsis
 
-- Program calculates and displays the average marks for all students.
+```bash
+student [COMMAND] [OPTIONS]
+```
 
-- Program provides an option to sort student records based on marks in ascending or descending order.
+#### Add a new student
+
+You will be prompted for the student's first name and last name.
+
+```bash
+student add
+```
+
+#### Remove a student
+
+Remove a student with the specified roll number.
+
+```bash
+student remove <roll_number>
+```
+
+#### List students
+
+List all or first `n` students in the system.
+
+```bash
+student list [n]
+```
+
+#### Sort students
+
+Sort the student list in ascending or descending order by roll number.
+
+```bash
+student sort [asc|desc]
+```
+
+#### Search for students
+
+Find students by their first or last names. The `query` can be any part of the name.
+
+```bash
+student find <query>
+```
+
+### `course` commands
+
+Allows you to manage students' courses.
+
+#### Synopsis
+
+```bash
+course [COMMAND] [OPTIONS]
+```
+
+#### Add a new course
+
+Add a new course for student with specified roll number. You will be prompted for the course name and score.
+
+```bash
+course add <roll_number>
+```
+
+#### Remove a course
+
+Remove a course for student with the specified roll number. You will be prompted for te course name.
+
+```bash
+course remove <roll_number>
+```

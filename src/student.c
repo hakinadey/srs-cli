@@ -149,7 +149,7 @@ void find_students_by_query(student_t *list, const char *query)
     if ((strcasestr(current->data->first_name, query) != NULL) ||
         (strcasestr(current->data->last_name, query) != NULL))
     {
-      printf("%-15d %-25s %-25s %-10d\n", current->data->roll_number, current->data->first_name, current->data->last_name, current->data->average_score);
+      printf("%-15d %-25s %-25s %d (%s)\n", current->data->roll_number, current->data->first_name, current->data->last_name, current->data->average_score, get_score_grade(current->data->average_score));
       found = 1;
     }
     current = current->next;
@@ -360,34 +360,17 @@ void show_student_help(void)
   printf("    student list [n]\n");
   printf("        List all or first n students in the system.\n\n");
 
-  printf("    student sort asc|desc\n");
+  printf("    student sort [asc|desc]\n");
   printf("        Sort the student list in ascending or descending order by roll number.\n\n");
 
   printf("    student find <query>\n");
   printf("        Find a student by their first or last name. The <query> can be any part of the name.\n\n");
-
-  printf("    student save <filename>\n");
-  printf("        Save list of students to a text/csv file.\n\n");
-
-  printf("    student load <filename>\n");
-  printf("        Load list of students from a text/csv file.\n\n");
 
   printf("    student help\n");
   printf("        Display this help information for student commands.\n\n");
 
   printf("    exit\n");
   printf("        Exit the program.\n");
-
-  printf("\nEXAMPLES\n");
-
-  printf("    student add\n");
-  printf("        Prompts the user for the first and last name and creates a new student record.\n\n");
-
-  printf("    student remove 3\n");
-  printf("        Removes the student with roll number 3.\n\n");
-
-  printf("    student show 5\n");
-  printf("        Displays the student record for roll number 5.\n\n");
 }
 
 /**
