@@ -6,13 +6,13 @@
  * @first_name: first name of course
  * @last_name: last name of course
  */
-int add_course(course_t **list, int roll_number, char *course_name, int score, int silent)
+void add_course(course_t **list, int roll_number, char *course_name, int score, int silent)
 {
   course *new_course = (course *)malloc(sizeof(course));
   if (!new_course)
   {
     printf("Could not allocate enough memory for new course\n");
-    return EXIT_FAILURE;
+    return;
   }
 
   new_course->roll_number = roll_number;
@@ -25,7 +25,7 @@ int add_course(course_t **list, int roll_number, char *course_name, int score, i
     free(new_course->course_name);
     free(new_course);
     printf("Could not allocate enough memory for new course\n");
-    return EXIT_FAILURE;
+    return;
   }
 
   new_node->data = new_course;
@@ -43,8 +43,44 @@ int add_course(course_t **list, int roll_number, char *course_name, int score, i
     new_node->prev = current;
   }
   if (!silent)
-    printf("Course added: (%d). %s %d\n", new_course->roll_number, course_name, score);
-  return EXIT_SUCCESS;
+    printf("%s (Grade %s) added for student with roll number %d\n", course_name, get_score_grade(score), roll_number);
+}
+
+/**
+ * remove_course - remove a course from the linked list
+ * @list: pionter to head of the linked list
+ * @roll_number: roll number of student
+ * @course_name: name of course
+ */
+void remove_course(course_t **list, int roll_number, char *course_name)
+{
+  course_t *node = *list;
+  while (node != NULL)
+  {
+    if (node->data->roll_number == roll_number && strcmp(node->data->course_name, course_name) == 0)
+      break;
+    node = node->next;
+  }
+
+  if (node == NULL)
+  {
+    printf("Student with roll number %d is not enrolled in %s\n", roll_number, course_name);
+    return;
+  }
+
+  if (node == *list)
+    *list = node->next;
+
+  if (node->prev != NULL)
+    node->prev->next = node->next;
+
+  if (node->next != NULL)
+    node->next->prev = node->prev;
+
+  free(node->data->course_name);
+  free(node->data);
+  free(node);
+  printf("%s removed for student with roll number %d\n", course_name, roll_number);
 }
 
 /**
@@ -70,13 +106,16 @@ void print_courses(course_t *list)
  * @list: pointer to courses linked list
  * @roll_number: roll number to find
  */
-void print_courses_by_roll_number(course_t *head, int roll_number)
+void print_courses_by_roll_number(course_t *list, int roll_number)
 {
   int found = 0;
-  course_t *current = head;
+  course_t *current = list;
 
-  printf("%-15s %-10s %-10s\n", "Course Name", "Score", "Grade");
-  printf("%-15s %-10s %-10s\n", "----------", "---------", "---------");
+  if (current != NULL)
+  {
+    printf("%-15s %-10s %-10s\n", "Course Name", "Score", "Grade");
+    printf("%-15s %-10s %-10s\n", "----------", "---------", "---------");
+  }
 
   int total_score = 0;
   int scores_count = 0;
@@ -102,6 +141,39 @@ void print_courses_by_roll_number(course_t *head, int roll_number)
   {
     printf("No courses enrolled.\n");
   }
+}
+
+/**
+ * find_courses_by_roll_number - find all courses with given roll number
+ * @list: pointer to courses linked list
+ * @roll_number: roll number to find
+ */
+int find_courses_by_roll_number(course_t *head, int roll_number, int print)
+{
+  course_t *current = head;
+
+  if (print && current != NULL)
+  {
+    printf("%-15s %-10s %-10s\n", "Course Name", "Score", "Grade");
+    printf("%-15s %-10s %-10s\n", "----------", "---------", "---------");
+  }
+
+  int courses_count = 0;
+  while (current != NULL)
+  {
+    if (current->data->roll_number == roll_number)
+    {
+      if (print)
+        printf("%-15s %-10d %-10s\n", current->data->course_name, current->data->score, get_score_grade(current->data->score));
+      courses_count++;
+    }
+    current = current->next;
+  }
+
+  if (print && courses_count == 0)
+    printf("No courses enrolled.\n");
+
+  return (courses_count);
 }
 
 /**

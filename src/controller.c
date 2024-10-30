@@ -189,4 +189,30 @@ void course_add(student_t **students, course_t **courses, char *argument)
  */
 void course_remove(student_t **students, course_t **courses, char *argument)
 {
+  int roll_number = argument == NULL ? 0 : atoi(argument);
+  if (!argument || (roll_number == 0 && argument[0] != '0'))
+  {
+    printf("Please provide a valid roll number\n");
+    return;
+  }
+  student *student_data = find_student_by_roll_number(*students, roll_number);
+  if (student_data == NULL)
+  {
+    printf("Student with roll number %d does not exist\n", roll_number);
+    return;
+  }
+
+  char course_name[50];
+  int courses_count = find_courses_by_roll_number(*courses, roll_number, 0);
+  if (courses_count == 0)
+  {
+    printf("Student with roll number %d is not enrolled in any course.\n", roll_number);
+    return;
+  }
+  find_courses_by_roll_number(*courses, roll_number, 1);
+  printf("Course to remove: ");
+  fgets((char *restrict)&course_name, sizeof(course_name), stdin);
+  course_name[strcspn(course_name, "\n")] = 0;
+
+  remove_course(courses, roll_number, course_name);
 }

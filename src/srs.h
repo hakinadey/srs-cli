@@ -89,9 +89,11 @@ char *strcasestr(const char *haystack, const char *needle);
 void swap_students(student *first_student, student *second_student);
 void empty_students_list(student_t **list);
 
-int add_course(course_t **list, int roll_number, char *course_name, int score, int silent);
+void add_course(course_t **list, int roll_number, char *course_name, int score, int silent);
+void remove_course(course_t **list, int roll_number, char *course_name);
 void print_courses(course_t *list);
-void print_courses_by_roll_number(course_t *head, int roll_number);
+void print_courses_by_roll_number(course_t *list, int roll_number);
+int find_courses_by_roll_number(course_t *head, int roll_number, int print);
 void save_courses_to_csv(course_t *list, char *filename);
 void load_courses_from_csv(course_t **list, char *filename);
 const char *get_score_grade(int score);
