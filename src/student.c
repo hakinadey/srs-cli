@@ -51,6 +51,18 @@ void add_student(student_t **students, course_t *courses, int roll_number, char 
 }
 
 /**
+ * update_student_avg_score - update average score for a student
+ * @data: double pointer to student data
+ * @avg_score: new average score
+ */
+void update_student_avg_score(student **data, int average_score)
+{
+  if (!data)
+    return;
+  (*data)->average_score = average_score;
+}
+
+/**
  * find_student_by_roll_number - find a single student in the linked list
  * @list: pointer to head of the linked list
  * @roll_number: roll number to find
@@ -253,7 +265,7 @@ void print_students(student_t *list, int count)
   {
     if (count != 0 && printed >= count)
       break;
-    printf("%-15d %-25s %-25s %-10d\n", current->data->roll_number, current->data->first_name, current->data->last_name, current->data->average_score);
+    printf("%-15d %-25s %-25s %-d (%s)\n", current->data->roll_number, current->data->first_name, current->data->last_name, current->data->average_score, get_score_grade(current->data->average_score));
     current = current->next;
     printed++;
   }

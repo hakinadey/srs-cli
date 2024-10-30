@@ -102,15 +102,15 @@ void student_find(student_t **students, course_t **courses, char *argument)
  */
 void student_sort(student_t **students, course_t **courses, char *argument)
 {
-  char *direction = argument == NULL ? "asc" : argument;
+  char *direction = argument == NULL ? "desc" : argument;
 
   if (strcmp(direction, "asc") == 0)
   {
-    sort_students_by_name(*students);
+    sort_students_by_avg_score(*students);
   }
   else if (strcmp(direction, "desc") == 0)
   {
-    sort_students_by_name(*students);
+    sort_students_by_avg_score(*students);
     reverse_students_list(students);
   }
   else
@@ -180,6 +180,7 @@ void course_add(student_t **students, course_t **courses, char *argument)
   course_name[strcspn(course_name, "\n")] = 0;
 
   add_course(courses, roll_number, course_name, score, 0);
+  update_student_avg_score(&student_data, get_average_score(*courses, roll_number));
 }
 
 /**
@@ -215,4 +216,5 @@ void course_remove(student_t **students, course_t **courses, char *argument)
   course_name[strcspn(course_name, "\n")] = 0;
 
   remove_course(courses, roll_number, course_name);
+  update_student_avg_score(&student_data, get_average_score(*courses, roll_number));
 }

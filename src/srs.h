@@ -76,12 +76,14 @@ void show_student_help(void);
 void show_course_help(void);
 
 void add_student(student_t **students, course_t *courses, int roll_number, char *first_name, char *last_name);
+void update_student_avg_score(student **data, int average_score);
 int find_highest_roll_number(student_t *list);
 student *find_student_by_roll_number(student_t *list, int roll_number);
 student_t *find_student_node_by_roll_number(student_t *head, int roll_number);
 void find_students_by_query(student_t *list, const char *query);
 void remove_student_by_roll_number(student_t **list, int roll_number);
 void sort_students_by_name(student_t *list);
+void sort_students_by_avg_score(student_t *list);
 void reverse_students_list(student_t **list);
 void print_students(student_t *list, int count);
 void save_students_to_csv(student_t *list, char *filename);
