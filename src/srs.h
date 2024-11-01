@@ -17,7 +17,7 @@ typedef struct
   int roll_number;
   char *first_name;
   char *last_name;
-  int average_score;
+  float average_score;
 } student;
 
 /**
@@ -43,7 +43,7 @@ typedef struct
 {
   int roll_number;
   char *course_name;
-  int score;
+  float score;
 } course;
 
 /**
@@ -76,7 +76,7 @@ void show_student_help(void);
 void show_course_help(void);
 
 void add_student(student_t **students, course_t *courses, int roll_number, char *first_name, char *last_name);
-void update_student_avg_score(student **data, int average_score);
+void update_student_avg_score(student **data, float average_score);
 int find_highest_roll_number(student_t *list);
 student *find_student_by_roll_number(student_t *list, int roll_number);
 student_t *find_student_node_by_roll_number(student_t *head, int roll_number);
@@ -92,15 +92,15 @@ char *strcasestr(const char *haystack, const char *needle);
 void swap_students(student *first_student, student *second_student);
 void empty_students_list(student_t **list);
 
-void add_course(course_t **list, int roll_number, char *course_name, int score, int silent);
+void add_course(course_t **list, int roll_number, char *course_name, float score, int silent);
 void remove_course(course_t **list, int roll_number, char *course_name);
 void print_courses(course_t *list);
 void print_courses_by_roll_number(course_t *list, int roll_number);
 int find_courses_by_roll_number(course_t *head, int roll_number, int print);
 void save_courses_to_csv(course_t *list, char *filename);
 void load_courses_from_csv(course_t **list, char *filename);
-const char *get_score_grade(int score);
-int get_average_score(course_t *list, int roll_number);
+const char *get_score_grade(float score);
+float get_average_score(course_t *list, int roll_number);
 void empty_courses_list(course_t **list);
 
 void student_add(student_t **students, course_t **courses, char *argument);

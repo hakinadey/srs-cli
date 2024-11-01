@@ -162,13 +162,13 @@ void course_add(student_t **students, course_t **courses, char *argument)
     return;
   }
   char course_name[50];
-  int score;
+  float score;
 
   printf("Course: ");
   fgets((char *restrict)&course_name, sizeof(course_name), stdin);
 
   printf("Score: ");
-  scanf("%d[^\n]", &score);
+  scanf("%f[^\n]", &score);
   getchar();
 
   if (score < 0 || score > 100)

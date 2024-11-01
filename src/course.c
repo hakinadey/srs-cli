@@ -6,7 +6,7 @@
  * @first_name: first name of course
  * @last_name: last name of course
  */
-void add_course(course_t **list, int roll_number, char *course_name, int score, int silent)
+void add_course(course_t **list, int roll_number, char *course_name, float score, int silent)
 {
   course *new_course = (course *)malloc(sizeof(course));
   if (!new_course)
@@ -96,7 +96,7 @@ void print_courses(course_t *list)
 
   while (current)
   {
-    printf("%-15d %-25s %-25d\n", current->data->roll_number, current->data->course_name, current->data->score);
+    printf("%-15d %-25s %-25.2f\n", current->data->roll_number, current->data->course_name, current->data->score);
     current = current->next;
   }
 }
@@ -117,13 +117,13 @@ void print_courses_by_roll_number(course_t *list, int roll_number)
     printf("%-15s %-10s %-10s\n", "----------", "---------", "---------");
   }
 
-  int total_score = 0;
+  float total_score = 0;
   int scores_count = 0;
   while (current != NULL)
   {
     if (current->data->roll_number == roll_number)
     {
-      printf("%-15s %-10d %-10s\n", current->data->course_name, current->data->score, get_score_grade(current->data->score));
+      printf("%-15s %-10.2f %-10s\n", current->data->course_name, current->data->score, get_score_grade(current->data->score));
       total_score += current->data->score;
       scores_count++;
       found = 1;
@@ -134,7 +134,7 @@ void print_courses_by_roll_number(course_t *list, int roll_number)
   if (found)
   {
     printf("%-15s %-10s %-10s\n", "----------", "---------", "---------");
-    printf("%-15s %-10d %-10s\n", "Average", total_score / scores_count, get_score_grade(total_score / scores_count));
+    printf("%-15s %-10.2f %-10s\n", "Average", total_score / scores_count, get_score_grade(total_score / scores_count));
     found = 1;
   }
   else
@@ -164,7 +164,7 @@ int find_courses_by_roll_number(course_t *head, int roll_number, int print)
     if (current->data->roll_number == roll_number)
     {
       if (print)
-        printf("%-15s %-10d %-10s\n", current->data->course_name, current->data->score, get_score_grade(current->data->score));
+        printf("%-15s %-10.2f %-10s\n", current->data->course_name, current->data->score, get_score_grade(current->data->score));
       courses_count++;
     }
     current = current->next;
@@ -192,7 +192,7 @@ void save_courses_to_csv(course_t *list, char *filename)
   fprintf(file, "Roll Number, Course Name, Score\n");
   while (current)
   {
-    fprintf(file, "%d, %s, %d\n", current->data->roll_number, current->data->course_name, current->data->score);
+    fprintf(file, "%d, %s, %f\n", current->data->roll_number, current->data->course_name, current->data->score);
     current = current->next;
   }
 
@@ -219,9 +219,9 @@ void load_courses_from_csv(course_t **list, char *filename)
 
     int roll_number;
     char course_name[50];
-    int score;
+    float score;
 
-    if (sscanf(line, "%d,%49[^,],%d", &roll_number, course_name, &score) != 3)
+    if (sscanf(line, "%d,%49[^,],%f", &roll_number, course_name, &score) != 3)
     {
       fprintf(stderr, "Could not parse line: %s\n", line);
       return;
@@ -253,8 +253,8 @@ void show_course_help(void)
   printf("    course add <roll_number>\n");
   printf("        Add a new course for a student. You will be prompted for the course name and the score.\n\n");
 
-  printf("    course remove <roll_number> <course_name>\n");
-  printf("        Remove a course for the specified student by roll number and course name.\n\n");
+  printf("    course remove <roll_number>\n");
+  printf("        Remove a course for the specified student by roll number.\n\n");
 
   printf("    course help\n");
   printf("        Display this help information for course commands.\n\n");
@@ -264,7 +264,7 @@ void show_course_help(void)
  * get_score_grade - compute grade associated with score
  * @score: score value
  */
-const char *get_score_grade(int score)
+const char *get_score_grade(float score)
 {
 
   if (score >= 70)
@@ -283,9 +283,9 @@ const char *get_score_grade(int score)
  * @roll_number: roll number of student
  * @courses: pointer to courses linked list
  */
-int get_average_score(course_t *list, int roll_number)
+float get_average_score(course_t *list, int roll_number)
 {
-  int total_score = 0;
+  float total_score = 0;
   int courses_count = 0;
   course_t *current = list;
 

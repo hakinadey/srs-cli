@@ -55,7 +55,7 @@ void add_student(student_t **students, course_t *courses, int roll_number, char 
  * @data: double pointer to student data
  * @avg_score: new average score
  */
-void update_student_avg_score(student **data, int average_score)
+void update_student_avg_score(student **data, float average_score)
 {
   if (!data)
     return;
@@ -149,7 +149,7 @@ void find_students_by_query(student_t *list, const char *query)
     if ((strcasestr(current->data->first_name, query) != NULL) ||
         (strcasestr(current->data->last_name, query) != NULL))
     {
-      printf("%-15d %-25s %-25s %d (%s)\n", current->data->roll_number, current->data->first_name, current->data->last_name, current->data->average_score, get_score_grade(current->data->average_score));
+      printf("%-15d %-25s %-25s %.2f (%s)\n", current->data->roll_number, current->data->first_name, current->data->last_name, current->data->average_score, get_score_grade(current->data->average_score));
       found = 1;
     }
     current = current->next;
@@ -265,7 +265,7 @@ void print_students(student_t *list, int count)
   {
     if (count != 0 && printed >= count)
       break;
-    printf("%-15d %-25s %-25s %-d (%s)\n", current->data->roll_number, current->data->first_name, current->data->last_name, current->data->average_score, get_score_grade(current->data->average_score));
+    printf("%-15d %-25s %-25s %.2f (%s)\n", current->data->roll_number, current->data->first_name, current->data->last_name, current->data->average_score, get_score_grade(current->data->average_score));
     current = current->next;
     printed++;
   }
@@ -361,7 +361,7 @@ void show_student_help(void)
   printf("        List all or first n students in the system.\n\n");
 
   printf("    student sort [asc|desc]\n");
-  printf("        Sort the student list in ascending or descending order by roll number.\n\n");
+  printf("        Sort the student list in ascending or descending order by average score.\n\n");
 
   printf("    student find <query>\n");
   printf("        Find a student by their first or last name. The <query> can be any part of the name.\n\n");
