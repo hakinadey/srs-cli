@@ -70,9 +70,9 @@ int main(int argc, char *argv[])
       char *argument = strtok(NULL, " ");
       controller_t controllers[] = {
           {"add", student_add},
-          {"list", student_print_all},
-          {"show", student_print_one},
-          {"remove", student_remove_one},
+          {"list", student_list},
+          {"show", student_show},
+          {"remove", student_remvoe},
           {"find", student_find},
           {"sort", student_sort},
           {NULL, NULL},

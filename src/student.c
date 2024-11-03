@@ -464,3 +464,21 @@ void empty_students_list(student_t **list)
 
   *list = NULL;
 }
+
+/**
+ * str_empty - check if a string value is empty
+ * @str: string value to check
+ */
+int str_empty(const char *str)
+{
+  if (str == NULL || *str == '\0')
+    return 1;
+
+  for (const char *p = str; *p; p++)
+  {
+    if (!isspace((unsigned char)*p))
+      return 0;
+  }
+
+  return 1;
+}

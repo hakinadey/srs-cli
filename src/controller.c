@@ -23,22 +23,22 @@ void student_add(student_t **students, course_t **courses, char *argument)
 }
 
 /**
- * student_print_all - controller to list all students
+ * student_list - controller to list all students
  * @list: pointer to linked list
  * @argument: argument passed to controller
  */
-void student_print_all(student_t **students, course_t **courses, char *argument)
+void student_list(student_t **students, course_t **courses, char *argument)
 {
   int count = argument == NULL ? 0 : atoi(argument);
   print_students(*students, count);
 }
 
 /**
- * student_print_one - controller to list one student
+ * student_show - controller to list one student
  * @list: pointer to linked list
  * @argument: argument passed to controller
  */
-void student_print_one(student_t **students, course_t **courses, char *argument)
+void student_show(student_t **students, course_t **courses, char *argument)
 {
   int roll_number = argument == NULL ? 0 : atoi(argument);
   if (!argument || (roll_number == 0 && argument[0] != '0'))
@@ -68,11 +68,11 @@ void student_print_one(student_t **students, course_t **courses, char *argument)
 }
 
 /**
- * student_remove_one - controller to remove one student
+ * student_remvoe - controller to remove one student
  * @list: pointer to linked list
  * @argument: argument passed to controller
  */
-void student_remove_one(student_t **students, course_t **courses, char *argument)
+void student_remvoe(student_t **students, course_t **courses, char *argument)
 {
   int roll_number = argument == NULL ? 0 : atoi(argument);
   if (!argument || (roll_number == 0 && argument[0] != 0))
@@ -162,22 +162,35 @@ void course_add(student_t **students, course_t **courses, char *argument)
     return;
   }
   char course_name[50];
+  char score_input[50];
   float score;
 
   printf("Course: ");
   fgets((char *restrict)&course_name, sizeof(course_name), stdin);
+  course_name[strcspn(course_name, "\n")] = 0;
+
+  if (find_course(*courses, roll_number, course_name) == 1)
+  {
+    printf("Student with roll number %d is already enrolled to %s\n", roll_number, course_name);
+    return;
+  }
 
   printf("Score: ");
-  scanf("%f[^\n]", &score);
-  getchar();
+  fgets((char *restrict)&score_input, sizeof(score_input), stdin);
+  score_input[strcspn(score_input, "\n")] = 0;
 
-  if (score < 0 || score > 100)
+  if (is_valid_float(score_input) == 0)
   {
-    printf("Please enter a valid score\n");
+    printf("%s is not a valid score\n", score_input);
     return;
   };
 
-  course_name[strcspn(course_name, "\n")] = 0;
+  score = strtof(score_input, NULL);
+  if (score < 0 || score > 100)
+  {
+    printf("%s is not a valid score\n", score_input);
+    return;
+  };
 
   add_course(courses, roll_number, course_name, score, 0);
   update_student_avg_score(&student_data, get_average_score(*courses, roll_number));

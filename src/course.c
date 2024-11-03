@@ -177,6 +177,26 @@ int find_courses_by_roll_number(course_t *head, int roll_number, int print)
 }
 
 /**
+ * find_course - find a course with given roll number and course name
+ * @list: pointer to courses linked list
+ * @roll_number: roll number to find
+ * @course_name: name of the course to find
+ */
+int find_course(course_t *head, int roll_number, char *course_name)
+{
+  course_t *current = head;
+
+  while (current != NULL)
+  {
+    if (current->data->roll_number == roll_number && strcmp(current->data->course_name, course_name) == 0)
+      return (1);
+    current = current->next;
+  }
+
+  return (0);
+}
+
+/**
  * save_to_csv - save list of courses to CSV file
  * @list: pointer to linked list head
  * @filename: name of csv file
@@ -327,4 +347,15 @@ void empty_courses_list(course_t **list)
   }
 
   *list = NULL;
+}
+
+/**
+ * is_valid_float - check if a string input is a valid float
+ * @str: the string to check
+ */
+int is_valid_float(const char *str)
+{
+  char *endptr;
+  strtof(str, &endptr);
+  return (*endptr == '\0' && endptr != str);
 }

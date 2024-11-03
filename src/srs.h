@@ -91,22 +91,25 @@ void load_students_from_csv(student_t **students, course_t *courses, char *filen
 char *strcasestr(const char *haystack, const char *needle);
 void swap_students(student *first_student, student *second_student);
 void empty_students_list(student_t **list);
+int str_empty(const char *str);
 
 void add_course(course_t **list, int roll_number, char *course_name, float score, int silent);
 void remove_course(course_t **list, int roll_number, char *course_name);
 void print_courses(course_t *list);
 void print_courses_by_roll_number(course_t *list, int roll_number);
 int find_courses_by_roll_number(course_t *head, int roll_number, int print);
+int find_course(course_t *head, int roll_number, char *course_name);
 void save_courses_to_csv(course_t *list, char *filename);
 void load_courses_from_csv(course_t **list, char *filename);
 const char *get_score_grade(float score);
 float get_average_score(course_t *list, int roll_number);
 void empty_courses_list(course_t **list);
+int is_valid_float(const char *str);
 
 void student_add(student_t **students, course_t **courses, char *argument);
-void student_print_all(student_t **students, course_t **courses, char *argument);
-void student_print_one(student_t **students, course_t **courses, char *argument);
-void student_remove_one(student_t **students, course_t **courses, char *argument);
+void student_list(student_t **students, course_t **courses, char *argument);
+void student_show(student_t **students, course_t **courses, char *argument);
+void student_remvoe(student_t **students, course_t **courses, char *argument);
 void student_find(student_t **students, course_t **courses, char *argument);
 void student_sort(student_t **students, course_t **courses, char *argument);
 void student_save(student_t **students, course_t **courses, char *argument);
